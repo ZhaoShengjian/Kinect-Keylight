@@ -2,7 +2,7 @@
 
 tracker::tracker() {
 	size = 0;
-	sizeTarget = 12;
+	sizeTarget = 15;
 	r = 255;
 	g = 0;
 	b = 0;
@@ -20,10 +20,10 @@ void tracker::update(float x, float y, int index, int kinectWidth, int kinectHei
 	float ease = 0.95;
 	posSmooth.x = ease * posSmooth.x + (1.0f-ease) * x;
 	posSmooth.y = ease * posSmooth.y + (1.0f-ease) * y;
-	
+
 	posScreen.x = ofMap(posSmooth.x, 0, kinectWidth, 0, ofGetWidth(), true);
 	posScreen.y = ofMap(posSmooth.y, 0, kinectHeight, 0, ofGetHeight(), true);
-	
+
 	whoThisFrame = index;
 	bFoundThisFrame = true;
 	nFramesActive ++;
@@ -67,11 +67,11 @@ void tracker::drawParticles() {
 				particles[i].draw(r, g, b);
 			}
 		}
-		
+
 		if (ofRandom(1.0) > 0.8) {
 			particles.erase(particles.begin(), particles.begin()+1);
 		}
-		
+
 		while (particles.size() > 50) {
 			particles.erase(particles.begin(), particles.begin()+1);
 		}
@@ -91,13 +91,13 @@ void tracker::emit(ofPoint direction) {
 		float rr = ((dx+dy)/500.0f)*((float)i/(float)q);
 		p.pos.x += -rr + ofRandom(rr+rr);
 		p.pos.y += -rr + ofRandom(rr+rr);
-		
+
 		p.vel.x = dx/(100.0f + ofRandom(500.0f));
 		p.vel.y = dy/(100.0f + ofRandom(500.0f));
 		p.vel.z = -0.1 + ofRandom(0.2);
-		
+
 		p.radius = ofRandom(20);
-		
+
 		particles.push_back(p);
 	}
 }
